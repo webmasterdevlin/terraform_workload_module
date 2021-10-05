@@ -8,8 +8,6 @@ on:
   pull_request:
     branches:
       - test
-    paths-ignore:
-      - "README.md"
 
 jobs:
   plan:
