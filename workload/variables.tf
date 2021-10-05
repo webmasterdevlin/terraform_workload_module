@@ -17,9 +17,9 @@ variable "tenant_id" {
   type        = string
 }
 
-variable "platform_rg_name" {
+variable "workload_rg_name" {
   type = string
 }
-variable "platform_rg_location" {
+variable "workload_rg_location" {
   type = string
 }

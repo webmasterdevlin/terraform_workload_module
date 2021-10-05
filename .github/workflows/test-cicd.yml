@@ -1,13 +1,13 @@
-name: (Dev) Plan & Apply Terraform
+name: (Test) Plan & Apply Terraform
 
 on:
   push:
     branches:
-      - production
+      - test
 
   pull_request:
     branches:
-      - production
+      - test
     paths-ignore:
       - "README.md"
 
@@ -44,9 +44,9 @@ jobs:
         id: init
         run: |
           terraform init \
-            -backend-config="resource_group_name=devlin-modulename-rg-dev" \
-            -backend-config="storage_account_name=devlinmodulenamesadev" \
-            -backend-config="container_name=devlinmodulecontainerdev" \
+            -backend-config="resource_group_name=devlin-modulename-rg-test" \
+            -backend-config="storage_account_name=devlinmodulenamesatest" \
+            -backend-config="container_name=devlinmodulecontainertest" \
             -backend-config="key=terraform.tfstate"
 
       - name: Terraform Validate
@@ -54,12 +54,12 @@ jobs:
         run: terraform validate -no-color
 
       - name: Terraform Plan
-        run: terraform plan -var-file=config.tfvars
+        run: terraform plan -var-file=platform/test/configurations.tfvars
         continue-on-error: true
 
       - name: Uncolored Terraform Plan for Bot
         id: plan
-        run: terraform plan -no-color -var-file=config.tfvars
+        run: terraform plan -no-color -var-file=platform/test/configurations.tfvars
         continue-on-error: true
 
       - name: Terraform PR commands Info
@@ -98,7 +98,7 @@ jobs:
   apply:
     name: Terraform Apply
 
-    if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/test' && github.event_name == 'push'
     runs-on: ubuntu-latest
 
     defaults:
@@ -123,15 +123,15 @@ jobs:
         id: init
         run: |
           terraform init \
-            -backend-config="resource_group_name=devlin-modulename-rg-dev" \
-            -backend-config="storage_account_name=devlinmodulenamesadev" \
-            -backend-config="container_name=devlinmodulecontainerdev" \
+            -backend-config="resource_group_name=devlin-modulename-rg-test" \
+            -backend-config="storage_account_name=devlinmodulenamesatest" \
+            -backend-config="container_name=devlinmodulecontainertest" \
             -backend-config="key=terraform.tfstate"
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply -auto-approve -var-file=config.tfvars
+        run: terraform apply -auto-approve -var-file=platform/test/configurations.tfvars
 
       - name: Terraform Destroy
         id: destroy
-        run: terraform destroy --auto-approve -var-file=config.tfvars
+        run: terraform destroy --auto-approve -var-file=platform/test/configurations.tfvars
