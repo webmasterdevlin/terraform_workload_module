@@ -1,7 +1,8 @@
-
+## demo code, remove me
 variable "workload_rg_name" {
   type = string
 }
+## demo code, remove me
 variable "workload_rg_location" {
   type = string
 }

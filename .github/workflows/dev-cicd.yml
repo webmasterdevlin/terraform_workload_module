@@ -22,10 +22,10 @@ jobs:
 
     env:
       # for terraform HTTP requests to Azure ARM services with required ARM_ prefix
-      ARM_CLIENT_ID: ${{secrets.CLIENT_ID_TEST}}
-      ARM_CLIENT_SECRET: ${{secrets.CLIENT_SECRET_TEST}}
-      ARM_SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID_TEST}}
-      ARM_TENANT_ID: ${{secrets.TENANT_ID_TEST}}
+      ARM_CLIENT_ID: ${{secrets.CLIENT_ID_DEV}}
+      ARM_CLIENT_SECRET: ${{secrets.CLIENT_SECRET_DEV}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID_DEV}}
+      ARM_TENANT_ID: ${{secrets.TENANT_ID_DEV}}
 
     steps:
       - name: Checkout
@@ -105,10 +105,10 @@ jobs:
 
     env:
       # for terraform HTTP requests to Azure ARM services with required ARM_ prefix
-      ARM_CLIENT_ID: ${{secrets.CLIENT_ID_TEST}}
-      ARM_CLIENT_SECRET: ${{secrets.CLIENT_SECRET_TEST}}
-      ARM_SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID_TEST}}
-      ARM_TENANT_ID: ${{secrets.TENANT_ID_TEST}}
+      ARM_CLIENT_ID: ${{secrets.CLIENT_ID_DEV}}
+      ARM_CLIENT_SECRET: ${{secrets.CLIENT_SECRET_DEV}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID_DEV}}
+      ARM_TENANT_ID: ${{secrets.TENANT_ID_DEV}}
 
     steps:
       - name: Checkout
