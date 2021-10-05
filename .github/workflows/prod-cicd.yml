@@ -52,12 +52,12 @@ jobs:
         run: terraform validate -no-color
 
       - name: Terraform Plan
-        run: terraform plan -var-file=platform/prod/configurations.tfvars
+        run: terraform plan -var-file=configs/prod.tfvars
         continue-on-error: true
 
       - name: Uncolored Terraform Plan for Bot
         id: plan
-        run: terraform plan -no-color -var-file=platform/prod/configurations.tfvars
+        run: terraform plan -no-color -var-file=configs/prod.tfvars
         continue-on-error: true
 
       - name: Terraform PR commands Info
@@ -128,8 +128,8 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply -auto-approve -var-file=platform/prod/configurations.tfvars
+        run: terraform apply -auto-approve -var-file=configs/prod.tfvars
 
       - name: Terraform Destroy
         id: destroy
-        run: terraform destroy --auto-approve -var-file=platform/prod/configurations.tfvars
+        run: terraform destroy --auto-approve -var-file=configs/prod.tfvars
