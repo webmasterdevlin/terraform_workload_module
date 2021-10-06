@@ -13,6 +13,9 @@ on:
     paths-ignore:
       - "README.md"
 
+env:
+  SAS_TOKEN: ${{secrets.SAS_TOKEN_TEST}}
+
 jobs:
   plan:
     name: Terraform Plan
