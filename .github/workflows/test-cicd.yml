@@ -52,7 +52,8 @@ jobs:
             -backend-config="resource_group_name=devlin-modulename-rg-test" \
             -backend-config="storage_account_name=devlinmodulenamesatest" \
             -backend-config="container_name=devlinmodulecontainertest" \
-            -backend-config="key=terraform.tfstate"
+            -backend-config="key=terraform.tfstate" \
+            -backend-config="sas_token=${{env.SAS_TOKEN}}"
 
       - name: Terraform Validate
         id: validate
@@ -131,7 +132,8 @@ jobs:
             -backend-config="resource_group_name=devlin-modulename-rg-test" \
             -backend-config="storage_account_name=devlinmodulenamesatest" \
             -backend-config="container_name=devlinmodulecontainertest" \
-            -backend-config="key=terraform.tfstate"
+            -backend-config="key=terraform.tfstate" \
+            -backend-config="sas_token=${{env.SAS_TOKEN}}"
 
       - name: Terraform Apply
         id: apply
