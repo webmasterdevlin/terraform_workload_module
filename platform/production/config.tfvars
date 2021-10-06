@@ -1,2 +1,2 @@
-prefix   = devlin
-location = norwayeast
+prefix   = "devlin"
+location = "norwayeast"
