@@ -128,7 +128,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: |
-          terraform init \
+          terraform init -upgrade \
             -backend-config="resource_group_name=devlin-modulename-rg-prod" \
             -backend-config="storage_account_name=devlinmodulenamesaprod" \
             -backend-config="container_name=devlinmodulecontainerprod" \
