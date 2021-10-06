@@ -1,7 +1,7 @@
-variable "prefix" {
-  description = "The Prefix used for all resources in this example"
+#testing purposes. remove me.
+variable "platform_rg_name" {
+  type = string
 }
-
-variable "location" {
-  description = "The Azure Region in which all resources in this example should be created."
+variable "platform_rg_location" {
+  type = string
 }
