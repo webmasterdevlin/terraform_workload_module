@@ -3,18 +3,15 @@ name: (Prod) Plan & Apply Terraform
 on:
   push:
     branches:
-      - master
+      - main
     paths-ignore:
       - "README.md"
 
   pull_request:
     branches:
-      - master
+      - main
     paths-ignore:
       - "README.md"
-
-env:
-  SAS_TOKEN: ${{secrets.SAS_TOKEN_PROD}}
 
 jobs:
   plan:
@@ -25,7 +22,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./workload
+        working-directory: ./platform/prod
 
     env:
       # for terraform HTTP requests to Azure ARM services with required ARM_ prefix
@@ -52,20 +49,19 @@ jobs:
             -backend-config="resource_group_name=devlin-modulename-rg-prod" \
             -backend-config="storage_account_name=devlinmodulenamesaprod" \
             -backend-config="container_name=devlinmodulecontainerprod" \
-            -backend-config="key=terraform.tfstate" \
-            -backend-config="sas_token=${{env.SAS_TOKEN}}"
+            -backend-config="key=terraform.tfstate"
 
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
 
       - name: Terraform Plan
-        run: terraform plan -var-file=configs/prod.tfvars
+        run: terraform plan -var-file=config.tfvars
         continue-on-error: true
 
       - name: Uncolored Terraform Plan for Bot
         id: plan
-        run: terraform plan -no-color -var-file=configs/prod.tfvars
+        run: terraform plan -no-color -var-file=config.tfvars
         continue-on-error: true
 
       - name: Terraform PR commands Info
@@ -104,15 +100,15 @@ jobs:
   apply:
     name: Terraform Apply
 
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: ./workload
+        working-directory: ./platform/prod
 
     env:
-      # For terraform HTTP requests to Azure ARM services with required ARM_ prefix
+      # for terraform HTTP requests to Azure ARM services with required ARM_ prefix
       ARM_CLIENT_ID: ${{secrets.CLIENT_ID_PROD}}
       ARM_CLIENT_SECRET: ${{secrets.CLIENT_SECRET_PROD}}
       ARM_SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID_PROD}}
@@ -132,13 +128,12 @@ jobs:
             -backend-config="resource_group_name=devlin-modulename-rg-prod" \
             -backend-config="storage_account_name=devlinmodulenamesaprod" \
             -backend-config="container_name=devlinmodulecontainerprod" \
-            -backend-config="key=terraform.tfstate" \
-            -backend-config="sas_token=${{env.SAS_TOKEN}}"
+            -backend-config="key=terraform.tfstate"
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply -auto-approve -var-file=configs/prod.tfvars
+        run: terraform apply -auto-approve -var-file=config.tfvars
 
       - name: Terraform Destroy
         id: destroy
-        run: terraform destroy --auto-approve -var-file=configs/prod.tfvars
+        run: terraform destroy --auto-approve -var-file=config.tfvars
