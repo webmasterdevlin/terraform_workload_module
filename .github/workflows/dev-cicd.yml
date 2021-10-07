@@ -14,13 +14,14 @@ on:
       - "README.md"
 
 env:
-  SAS_TOKEN: ${{secrets.SAS_TOKEN_DEV}}
+  SAS_TOKEN: ${{secrets.SAS_TOKEN}}
 
 jobs:
   plan:
     name: Terraform Plan
 
     if: github.event_name == 'pull_request'
+    environment: dev
     runs-on: ubuntu-latest
 
     defaults:
@@ -29,10 +30,10 @@ jobs:
 
     env:
       # for terraform HTTP requests to Azure ARM services with required ARM_ prefix
-      ARM_CLIENT_ID: ${{secrets.CLIENT_ID_DEV}}
-      ARM_CLIENT_SECRET: ${{secrets.CLIENT_SECRET_DEV}}
-      ARM_SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID_DEV}}
-      ARM_TENANT_ID: ${{secrets.TENANT_ID_DEV}}
+      ARM_CLIENT_ID: ${{secrets.CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.TENANT_ID}}
 
     steps:
       - name: Checkout
@@ -105,6 +106,7 @@ jobs:
     name: Terraform Apply
 
     if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
+    environment: dev
     runs-on: ubuntu-latest
 
     defaults:
@@ -113,10 +115,10 @@ jobs:
 
     env:
       # for terraform HTTP requests to Azure ARM services with required ARM_ prefix
-      ARM_CLIENT_ID: ${{secrets.CLIENT_ID_DEV}}
-      ARM_CLIENT_SECRET: ${{secrets.CLIENT_SECRET_DEV}}
-      ARM_SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID_DEV}}
-      ARM_TENANT_ID: ${{secrets.TENANT_ID_DEV}}
+      ARM_CLIENT_ID: ${{secrets.CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.TENANT_ID}}
 
     steps:
       - name: Checkout
